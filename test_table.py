@@ -72,11 +72,6 @@ with connection.cursor() as cursor:
         sql7m="create table forecast6_contracts(id bigint auto_increment primary key, id_contracts int, id_meteo bigint, datetime int, CONSTRAINT FK_idcontracts_forec6 foreign key (id_contracts) references contracts(id), CONSTRAINT FK_idmeteo_forec6 foreign key (id_meteo) references meteo(id)) engine=innodb"
         cursor.execute(sql7m)
         table += 1
-    
-    if "repeatt" not in result2:
-        sqlrepeat="create table repeatt(id int auto_increment primary key, expression int) engine=innodb"
-        cursor.execute(sqlrepeat)
-        table += 1
         
     if "prediction_3h" not in result2:
         sqlprediction3="create table prediction_3h(id int auto_increment primary key,last_update int,id_station int,available_bikes int,available_bike_stands int, CONSTRAINT FK_station_prediction3 foreign key (id_station) references stations(id)) engine=innodb"
