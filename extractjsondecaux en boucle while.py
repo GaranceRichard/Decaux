@@ -67,9 +67,8 @@ while repeat < 10:
     dfc=df[['contract_name','commercial_name']].drop_duplicates()
     
     taille = len(df)
-    
-#initialisation en contract[0]    
-    
+
+    	#Définition des météos actuelles et en forecast à 3 et 6 heures
     def generate_actual_dfweather(city):
         if str(city) == 'Goteborg':
             city='Goeteborg'
@@ -145,9 +144,13 @@ while repeat < 10:
     
     
     tps3=time.clock()
+    dfc=dfc.values.tolist()
     print("temps extraction/wrangling : \t %.2f \t taille du df : \t %d" % (tps3-tps2,taille))
     
-    dfc=dfc.values.tolist()
+
+
+    #Mise à jour des tables
+	    #Mise à jour de la table contrats
     contrat = 0
     
     connection = pymysql.connect(host=adress,
@@ -183,6 +186,7 @@ while repeat < 10:
     dfstations=df[['contract_name','number', 'name', 'address', 'lat','lng', 'banking', 'bonus']].values.tolist()
     station = 0
     
+	    #Mise à jour de la table stations
     with connection.cursor() as cursor:
         sql9 = "SELECT * from stations"
         cursor.execute(sql9)
@@ -222,6 +226,7 @@ while repeat < 10:
     
     tps6=time.clock()
     print("temps création positions : \t %.2f \t positions crées : \t %d" % (tps6-tps5,position))
+    
     
     dfweatherpos=dfweather[["Cloudiness","Pressure","Temp","Weather","Windforce","Winddirection","Humidity"]].values.tolist()
     ddfforeca3=dfforeca3[["Cloudiness","Pressure","Temp","Weather","Windforce","Winddirection","Humidity"]].values.tolist()
